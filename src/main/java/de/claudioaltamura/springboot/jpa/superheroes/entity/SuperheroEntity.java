@@ -1,19 +1,24 @@
 package de.claudioaltamura.springboot.jpa.superheroes.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
-@Table(name="superheroes")
+@NoArgsConstructor
+@Getter
+@Setter
+@Table(name = "superheroes")
 public class SuperheroEntity {
 
 	@Id
@@ -32,44 +37,17 @@ public class SuperheroEntity {
 	@Column(name = "power", nullable = false)
 	private double power;
 
-	public SuperheroEntity() {}
 
-	public SuperheroEntity(String name, String realName, double power) {
+	@NotNull
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "fk_city")
+	private CityEntity city;
+
+	public SuperheroEntity(String name, String realName, double power, CityEntity city) {
 		this.name = name;
 		this.realName = realName;
 		this.power = power;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRealName() {
-		return realName;
-	}
-
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
-
-	public double getPower() {
-		return power;
-	}
-
-	public void setPower(double power) {
-		this.power = power;
+		this.city = city;
 	}
 
 	@Override
@@ -87,11 +65,12 @@ public class SuperheroEntity {
 
 	@Override
 	public String toString() {
-		return "Superhero{" +
+		return "SuperheroEntity{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", realName='" + realName + '\'' +
 				", power=" + power +
+				", city=" + city +
 				'}';
 	}
 }
