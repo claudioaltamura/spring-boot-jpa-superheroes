@@ -16,9 +16,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import de.claudioaltamura.springboot.jpa.superheroes.repository.SuperheroEntityRepository;
 
+import javax.transaction.Transactional;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Testcontainers
+@Transactional
 class SuperheroEntityDataJpaTest {
 
 	@Container
@@ -36,10 +39,13 @@ class SuperheroEntityDataJpaTest {
 
 	@Test
 	void testInteractionWithDatabase() {
-		superheroEntityRepository.save(new SuperheroEntity("Batman", "Bruce Wayne", 92.0d));
+		final var city = new CityEntity();
+		city.setName("Gotham City");
+		superheroEntityRepository.save(new SuperheroEntity("Batman", "Bruce Wayne", 92.0d, city));
 
 		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Batman");
 
 		assertThat(superheroes).hasSize(1);
+		assertThat(superheroes.get(0).getCity().getName()).isEqualTo("Gotham City");
 	}
 }
