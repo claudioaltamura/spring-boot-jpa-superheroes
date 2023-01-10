@@ -39,12 +39,12 @@ class SuperheroEntityDataJpaTest {
 
 	@Test
 	void testInteractionWithDatabase() {
-		final var city = new CityEntity("Gotham City");
-		superheroEntityRepository.save(new SuperheroEntity("Batman", "Bruce Wayne", 92.0d, city));
+		final var city = new CityEntity("New York City");
+		superheroEntityRepository.save(new SuperheroEntity("Spider-Men", "Peter Parker", 92.0d, city));
 
-		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Batman");
+		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Spider-Men");
 
 		assertThat(superheroes).hasSize(1);
-		assertThat(superheroes.get(0).getCity().getName()).isEqualTo("Gotham City");
+		assertThat(superheroes.get(0).getCity().getName()).isEqualTo("New York City");
 	}
 }
