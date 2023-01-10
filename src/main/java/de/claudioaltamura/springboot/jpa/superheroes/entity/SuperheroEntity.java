@@ -1,6 +1,5 @@
 package de.claudioaltamura.springboot.jpa.superheroes.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +21,7 @@ import javax.validation.constraints.NotNull;
 public class SuperheroEntity {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotEmpty
@@ -39,8 +38,8 @@ public class SuperheroEntity {
 
 
 	@NotNull
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "fk_city")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_cities", referencedColumnName = "id",foreignKey = @ForeignKey(name="fk_cities_supeheroes"))
 	private CityEntity city;
 
 	public SuperheroEntity(String name, String realName, double power, CityEntity city) {
