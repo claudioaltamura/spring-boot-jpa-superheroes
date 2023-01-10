@@ -25,7 +25,7 @@ import javax.transaction.Transactional;
 class SuperheroEntityDataJpaTest {
 
 	@Container
-	private static final PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:14.1");
+	private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14.1");
 
 	@Autowired
 	private SuperheroEntityRepository superheroEntityRepository;
@@ -39,8 +39,7 @@ class SuperheroEntityDataJpaTest {
 
 	@Test
 	void testInteractionWithDatabase() {
-		final var city = new CityEntity();
-		city.setName("Gotham City");
+		final var city = new CityEntity("Gotham City");
 		superheroEntityRepository.save(new SuperheroEntity("Batman", "Bruce Wayne", 92.0d, city));
 
 		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Batman");
