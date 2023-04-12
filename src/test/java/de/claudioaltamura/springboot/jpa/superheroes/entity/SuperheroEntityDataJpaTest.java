@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import de.claudioaltamura.springboot.jpa.superheroes.repository.SuperheroEntityRepository;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
