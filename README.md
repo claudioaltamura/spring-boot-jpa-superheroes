@@ -15,8 +15,8 @@ Spring Boot JPA example
 
     liquibase init project \
     --project-dir=./src/main/resources/liquibase \
-    --changelog-file=changelog.sql \
-    --format=sql \
+    --changelog-file=db.changelog-master.yaml \
+    --format=yaml \
     --project-defaults-file=liquibase.properties \
     --url=jdbc:postgresql://localhost:5432/superheroes \
     --username=hero \
@@ -26,13 +26,16 @@ Spring Boot JPA example
 
     https://docs.liquibase.com/commands/home.html
 
-    cd src/main/resources/liquibase
+    cd src/main/resources/db
 
-    liquibase generate-changelog --overwrite-output-file=true
+    liquibase generate-changelog
 
     liquibase changelog-sync
 
     liquibase status
 
-    
+    liquibase clear-checksums
 
+#### Maven
+
+    https://docs.liquibase.com/tools-integrations/maven/commands/home.html

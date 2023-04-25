@@ -1,0 +1,11 @@
+databaseChangeLog:
+    - changeSet:
+          id: 01-create
+          author: Claudio Altamura
+          changes:
+              - sqlFile:
+                    encoding: utf8
+                    path: changelog/01-create.sql
+                    relativeToChangelogFile: true
+                    splitStatements: true
+                    stripComments: true
