@@ -5,7 +5,7 @@ databaseChangeLog:
           changes:
               - sqlFile:
                     encoding: utf8
-                    path: changelog/01-create.sql
+                    path: 01-create.sql
                     relativeToChangelogFile: true
                     splitStatements: true
                     stripComments: true
