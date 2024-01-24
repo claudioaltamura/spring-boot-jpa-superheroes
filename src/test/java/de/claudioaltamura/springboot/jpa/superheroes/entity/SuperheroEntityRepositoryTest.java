@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import de.claudioaltamura.springboot.jpa.superheroes.repository.SuperheroEntityRepository;
 
 @DataJpaTest
-@Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLContainer {
 
