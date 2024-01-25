@@ -10,8 +10,8 @@ CREATE INDEX "idx_city_name" ON "cities"("name");
 CREATE SEQUENCE  IF NOT EXISTS "superheroes_seq" AS bigint START WITH 1 INCREMENT BY 50 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
 
 -- changeset claudio.altamura:1682425329092-4
-CREATE TABLE "superheroes" ("id" BIGINT NOT NULL, "name" VARCHAR(255), "power" FLOAT8 NOT NULL, "real_name" VARCHAR(255), "fk_cities" BIGINT NOT NULL, CONSTRAINT "superheroes_pkey" PRIMARY KEY ("id"));
+CREATE TABLE "superheroes" ("id" BIGINT NOT NULL, "name" VARCHAR(255), "power" FLOAT8 NOT NULL, "real_name" VARCHAR(255), "city_id" BIGINT NOT NULL, CONSTRAINT "superheroes_pkey" PRIMARY KEY ("id"));
 
 -- changeset claudio.altamura:1682425329092-5
-ALTER TABLE "superheroes" ADD CONSTRAINT "fk_cities_supeheroes" FOREIGN KEY ("fk_cities") REFERENCES "cities" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE "superheroes" ADD CONSTRAINT "fk_cities_supeheroes" FOREIGN KEY ("city_id") REFERENCES "cities" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 

@@ -36,10 +36,8 @@ public class SuperheroEntity {
 	@Column(name = "power", nullable = false)
 	private double power;
 
-
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_cities", referencedColumnName = "id",foreignKey = @ForeignKey(name="fk_cities_supeheroes"))
+	@ManyToOne(cascade = CascadeType.ALL, optional = false)
 	private CityEntity city;
 
 	public SuperheroEntity(String name, String realName, double power, CityEntity city) {

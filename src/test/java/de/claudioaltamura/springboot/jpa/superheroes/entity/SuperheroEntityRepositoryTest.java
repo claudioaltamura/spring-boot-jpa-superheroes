@@ -24,6 +24,14 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 	public void setUp() {
 		final var city = new CityEntity("New York City");
 		superheroEntityRepository.save(new SuperheroEntity("Spider-Men", "Peter Parker", 92.0d, city));
+		superheroEntityRepository.save(new SuperheroEntity("Iron Man", "Tony Stark", 99.0d, new CityEntity("Malibu")));
+	}
+
+	@Test
+	void findAll() {
+		List<SuperheroEntity> all = superheroEntityRepository.findAll();
+
+		assertThat(all).hasSize(3);
 	}
 	@Test
 	void findByNameShouldReturnSuperhero() {
