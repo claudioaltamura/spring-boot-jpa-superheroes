@@ -17,7 +17,9 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "superheroes")
+@Table(name = "superheroes", indexes = {
+		@Index(name = "idx_sh_name_unq", columnList = "name", unique = true)
+})
 public class SuperheroEntity {
 
 	@Id
