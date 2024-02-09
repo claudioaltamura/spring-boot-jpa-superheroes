@@ -23,7 +23,7 @@ import jakarta.validation.constraints.NotNull;
 public class SuperheroEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@NotEmpty
