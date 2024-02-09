@@ -19,7 +19,7 @@ public class CityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false, updatable = false)
+    @NotNull
     private Long id;
 
     @NotNull

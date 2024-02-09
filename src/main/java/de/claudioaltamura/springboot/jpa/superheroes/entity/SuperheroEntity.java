@@ -24,6 +24,7 @@ public class SuperheroEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@NotNull
 	private Long id;
 
 	@NotEmpty
