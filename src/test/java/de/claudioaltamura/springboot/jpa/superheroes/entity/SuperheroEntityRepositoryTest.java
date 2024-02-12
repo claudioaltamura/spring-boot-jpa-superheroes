@@ -66,9 +66,9 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 		final var superhero = superheroEntityRepository.findById(id);
 
 		superhero.ifPresentOrElse(
-            superheroEntityRepository::delete
+            hero -> superheroEntityRepository.delete(hero)
         , () ->
-			AssertionsForClassTypes.fail("Superhero not found: " + id);
+			AssertionsForClassTypes.fail("Superhero not found: " + id)
         );
 
 		final var deletedSuperhero = superheroEntityRepository.findById(id);
