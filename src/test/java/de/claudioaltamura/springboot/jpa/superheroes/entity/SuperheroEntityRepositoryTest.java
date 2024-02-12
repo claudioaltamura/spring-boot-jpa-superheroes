@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import de.claudioaltamura.springboot.jpa.SuperheroesApplicationPostgeSQLContainer;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -25,7 +26,7 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 		final var city = new CityEntity("Keystone Quadrant");
 		superheroEntityRepository.save(new SuperheroEntity("Rocket", "Rocket Raccoon", 90.0d, city));
 
-		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Rocket");
+		final List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Rocket");
 
 		assertThat(superheroes).hasSize(1);
 		assertThat(superheroes.get(0).getRealName()).isEqualTo("Rocket Raccoon");
@@ -34,7 +35,7 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 	@Test
 	@Sql("/fixtures/insert-cities-superheroes.sql")
 	void shouldReturnSuperheroWhenFindByName() {
-		List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Spider-Men");
+		final List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Spider-Men");
 
 		assertThat(superheroes).hasSize(1);
 		assertThat(superheroes.get(0).getCity().getName()).isEqualTo("NYC");
@@ -43,7 +44,7 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 	@Test
 	@Sql("/fixtures/insert-cities-superheroes.sql")
 	void shouldReturnSuperheroWhenFindByNameStartWith() {
-		List<SuperheroEntity> superheroes = superheroEntityRepository.findByNameStartsWith("Sp");
+		final List<SuperheroEntity> superheroes = superheroEntityRepository.findByNameStartsWith("Sp");
 
 		assertThat(superheroes).hasSize(1);
 		assertThat(superheroes.get(0).getName()).isEqualTo("Spider-Men");
@@ -52,9 +53,25 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 	@Test
 	@Sql("/fixtures/insert-cities-superheroes.sql")
 	void shouldReturnSuperheroWhenSearchContainsByNameLike() {
-		List<SuperheroEntity> superheroes = superheroEntityRepository.searchContainsByNameLike("der");
+		final List<SuperheroEntity> superheroes = superheroEntityRepository.searchContainsByNameLike("der");
 
 		assertThat(superheroes).hasSize(1);
 		assertThat(superheroes.get(0).getName()).isEqualTo("Spider-Men");
+	}
+
+	@Test
+	@Sql("/fixtures/insert-cities-superheroes.sql")
+	void shouldDeleteSuperhero() {
+		final var id = 3L;
+		final var superhero = superheroEntityRepository.findById(id);
+
+		superhero.ifPresentOrElse(
+            superheroEntityRepository::delete
+        , () -> {
+			AssertionsForClassTypes.fail("Superhero not found: " + id);
+        });
+
+		final var deletedSuperhero = superheroEntityRepository.findById(id);
+		assertThat(deletedSuperhero).isEmpty();
 	}
 }
