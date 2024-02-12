@@ -34,6 +34,22 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 
 	@Test
 	@Sql("/fixtures/insert-cities-superheroes.sql")
+	void shouldDeleteSuperhero() {
+		final var id = 3L;
+		final var superhero = superheroEntityRepository.findById(id);
+
+		superhero.ifPresentOrElse(
+				hero -> superheroEntityRepository.delete(hero)
+				, () ->
+						AssertionsForClassTypes.fail("Superhero not found: " + id)
+		);
+
+		final var deletedSuperhero = superheroEntityRepository.findById(id);
+		assertThat(deletedSuperhero).isEmpty();
+	}
+
+	@Test
+	@Sql("/fixtures/insert-cities-superheroes.sql")
 	void shouldReturnSuperheroWhenFindByName() {
 		final List<SuperheroEntity> superheroes = superheroEntityRepository.findByName("Spider-Men");
 
@@ -59,19 +75,4 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 		assertThat(superheroes.get(0).getName()).isEqualTo("Spider-Men");
 	}
 
-	@Test
-	@Sql("/fixtures/insert-cities-superheroes.sql")
-	void shouldDeleteSuperhero() {
-		final var id = 3L;
-		final var superhero = superheroEntityRepository.findById(id);
-
-		superhero.ifPresentOrElse(
-            hero -> superheroEntityRepository.delete(hero)
-        , () ->
-			AssertionsForClassTypes.fail("Superhero not found: " + id)
-        );
-
-		final var deletedSuperhero = superheroEntityRepository.findById(id);
-		assertThat(deletedSuperhero).isEmpty();
-	}
 }
