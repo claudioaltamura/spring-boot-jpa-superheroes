@@ -34,6 +34,26 @@ class SuperheroEntityRepositoryTest extends SuperheroesApplicationPostgeSQLConta
 
 	@Test
 	@Sql("/fixtures/insert-cities-superheroes.sql")
+	void shouldUpdateSuperhero() {
+		final var id = 3L;
+		final var superhero = superheroEntityRepository.findById(id);
+
+		superhero.ifPresentOrElse(
+				hero -> {
+					hero.setPower(95.0d);
+					superheroEntityRepository.save(hero);
+				}
+				, () ->
+						AssertionsForClassTypes.fail("Superhero not found: " + id)
+		);
+
+		final var updatedSuperhero = superheroEntityRepository.findById(id);
+		assertThat(updatedSuperhero).isNotEmpty();
+		assertThat(updatedSuperhero.get().getPower()).isEqualTo(95.0d);
+	}
+
+	@Test
+	@Sql("/fixtures/insert-cities-superheroes.sql")
 	void shouldDeleteSuperhero() {
 		final var id = 3L;
 		final var superhero = superheroEntityRepository.findById(id);
