@@ -1,6 +1,6 @@
 plugins {
-	id("org.springframework.boot") version "3.2.2"
-	id("io.spring.dependency-management") version "1.1.4"
+	id("org.springframework.boot") version "3.4.1"
+	id("io.spring.dependency-management") version "1.1.7"
 	id("java")
     id("com.diffplug.spotless") version "6.25.0"
     id("com.github.ben-manes.versions") version "0.51.0"
@@ -25,7 +25,7 @@ dependencies {
 
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation ("org.springframework.boot:spring-boot-starter-validation")
-    implementation ("org.postgresql:postgresql:42.7.1")
+    implementation ("org.postgresql:postgresql:42.7.4")
 
     developmentOnly ("org.springframework.boot:spring-boot-devtools")
     runtimeOnly ("org.liquibase:liquibase-core")
