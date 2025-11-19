@@ -1,17 +1,19 @@
 plugins {
-	id("org.springframework.boot") version "3.4.1"
-	id("io.spring.dependency-management") version "1.1.7"
-	id("java")
-    id("com.diffplug.spotless") version "6.25.0"
-    id("com.github.ben-manes.versions") version "0.51.0"
+    java
+    id("org.springframework.boot") version "3.5.7"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("com.diffplug.spotless") version "8.1.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "de.claudioaltamura"
 version = "0.0.1-SNAPSHOT"
+description = "Demo project for Spring Boot and JPA"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 repositories {
@@ -25,7 +27,7 @@ dependencies {
 
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation ("org.springframework.boot:spring-boot-starter-validation")
-    implementation ("org.postgresql:postgresql:42.7.4")
+    implementation ("org.postgresql:postgresql:42.7.8")
 
     developmentOnly ("org.springframework.boot:spring-boot-devtools")
     runtimeOnly ("org.liquibase:liquibase-core")
@@ -37,6 +39,7 @@ dependencies {
     testImplementation ("org.springframework.boot:spring-boot-starter-test")
     testImplementation ("org.testcontainers:junit-jupiter")
     testImplementation ("org.testcontainers:postgresql")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
